@@ -14,30 +14,11 @@
 //app.listen(5000);   //express telling node to respond the request coming from the port 5000
 
 const express = require("express");
-const passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const keys = require("./config/keys");
+require("./services/passport");
+
 const app = express();
 
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: keys.googleClientID,
-      clientSecret: keys.googleClientSecret,
-      callbackURL: "/auth/google/callback",
-    },
-    (acessToken) => {
-      console.log(accessToken);
-    }
-  )
-); // Here we are paasing two arguments to google strategy one is credentials and second one is acesstoken
-
-app.get(
-  "/auth/google",
-  passport.authenticate("google", {
-    scope: ["profile", "email"],
-  })
-);
+require("./routes/authRoutes")(app);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
