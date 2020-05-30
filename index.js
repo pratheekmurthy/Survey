@@ -14,7 +14,12 @@
 //app.listen(5000);   //express telling node to respond the request coming from the port 5000
 
 const express = require("express");
+const mongoose = require("mongoose");
+const keys = require("./config/keys");
 require("./services/passport");
+require("./models/user");
+
+mongoose.connect(keys.mongoURI);
 
 const app = express();
 
